@@ -1,7 +1,7 @@
 # Code-A-Pookalam 2023
 Celebrate the spirit of Onam with code and creativity! 
 
-[What is Code-A-Pookalam](#what-is-code-a-pookalam) | [Guidelines](#guidelines) | [Prize Pool](#prize-pool) | [FAQs](#faqs) | [Contact Us](#contact-us)
+[What is Code-A-Pookalam](#what-is-code-a-pookalam) | [Guidelines](#guidelines) | [Resources](#resources) | [Prize Pool](#prize-pool) | [FAQs](#faqs) | [Contact Us](#contact-us)
 
 ## What is Code-A-Pookalam
 Celebrate the spirit of Onam with code and creativity! Join us, the FOSSMEC team, in embracing the joy and happiness of this festive season by designing a vibrant floral Carpet, or Pookalam, using your favorite programming language!
@@ -21,6 +21,12 @@ Register now to showcase your skills and stand a chance to win exciting prizes u
 
 - For Detailed Guidelines, Checkout [here!](https://docs.google.com/document/d/16bRP7FXh7AOdZtVxUcmNj89r1Xs5Zy-GA9_rlnKo2cc/edit#heading=h.x5mzxkfkmu4r)
 
+## Resources
+- Learn [HTML](https://www.w3schools.com/html/) and [CSS](https://www.w3schools.com/css/) 
+- Learn [Python Turtle](https://docs.python.org/3/library/turtle.html)
+- Enroll for [The Joy of Programming](https://docs.python.org/3/library/turtle.html)
+- Learn [Git](https://github.com/FossMec/Learning-Resources#git) and [How to do a PR](https://github.com/FossMec/Practice-Git)
+- Need Inspirations for Pookalam? [Checkout here!](https://drive.google.com/drive/folders/1U3CbaN-LTtsRf0fDu-jRlSk7NISEwqdG?usp=sharing)
 ## Prize Pool
 Have you heard of [Angel numbers?](https://www.wellandgood.com/what-are-angel-numbers/)
 

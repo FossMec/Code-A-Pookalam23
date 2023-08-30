@@ -30,9 +30,10 @@ Register now to showcase your skills and stand a chance to win exciting prizes u
 ## Prize Pool
 Have you heard of [Angel numbers?](https://www.wellandgood.com/what-are-angel-numbers/)
 
-### First Prize     -   ₹888
-### Second Prize    -   ₹666
-### Third Prize     -   ₹444
+| First Prize     |   ₹888 |
+|--|--|
+| Second Prize    |   ₹666 |
+| Third Prize     |   ₹444 |
 
 ## FAQs
 

@@ -1,5 +1,24 @@
+'''
+	Final Submisssion by : Aswanth V C
+	for "Code A Pookalam' 23 - FOSSMec
+	NB: 
+		- The Code doesnt use any external requirements (only turtle and math)
+		- If you encounter any bug, or didn't get the output as expected. contact me directly
+		- The code is not documented effectively
+		- the radius of the circle can be easily modified by changing the variable "rad"
+	check out my:
+		- github : https://github.com/aswanthabam
+		- linkedin : https://www.linkedin.com/in/aswanth-vc-2612b91b9
+		- portfolio : https://aswanthvc.web.app
+	What does this code do ? 
+		This code draws a pookalam (an intricate and colourful arrangement of colours) using python turtle graphics.
+		It draws a Theyyam (Hindu ritual practiced in northern Kerala) inside this pookalam. Drawing Theyyam using 
+		turtle graphics is a complex task because it contains complex shapes and designs.
+	Thank You!
+'''
 from turtle import * 
 import math
+
 def calculate_arc_dimensions(radius, angle_degrees):
     angle_radians = math.radians(angle_degrees)
     width = 2 * radius * math.sin(angle_radians / 2)
@@ -58,9 +77,46 @@ def draw_eye(x,y,major,minor,fillclr=None,pen_down=True):
 		setheading(chead+90)
 		circle(minor,90)
 	if fillclr is not None:end_fill()
+def draw_dual_circle(x,y,rad,gap,fillclr,upper_size=3):
+  penup()
+  goto(x,y-rad-gap)
+  setheading(0)
+  fillcolor(fillclr)
+  begin_fill()
+  circle(rad-gap)
+  end_fill()
+  right(90)
+  forward(gap)
+  setheading(0)
+  color(fillclr)
+  pensize(upper_size)
+  pendown()
+  circle(rad)
+  penup()
+  color('#000')
+def draw_dashed_circle(x,y,rad,fillclr,peaces=10):
+  penup()
+  goto(x,y-rad)
+  setheading(0)
+  fillcolor(fillclr)
+  for i in range(1,peaces+1):
+    if i%2 == 0:
+      cx1,cy1 = pos()
+      circle(rad,360/peaces)
+      cx2,cy2 = pos()
+      chead = heading()
+      circle(rad,-360/peaces)
+      begin_fill()
+      circle(rad,360/peaces)
+      goto(x,y)
+      goto(cx1,cy1)
+      end_fill()
+      goto(cx2,cy2)
+      setheading(chead)
+    else:circle(rad,360/peaces)
 def draw_theyyam_face(x,y,height):
-	ellipse_height = height * 0.594
-	ellipse_width = height * 0.451
+	# ellipse_height = height * 0.594
+	# ellipse_width = height * 0.451
 	eye_pos = height * 0.22
 	mouth_pos = height * 0.10
 	head_design_pos = height * 0.309
@@ -110,6 +166,8 @@ def draw_theyyam_face(x,y,height):
 		goto(cx,cy)
 		circle(-((crown_bottom_width/2)-(crown_top_circle_gap+crown_top_circle_penta_gap)),180/num_peaces/2)
 	setheading(0)
+	# dashed circle
+	draw_dashed_circle(x,y+crown_height+crown_bottom_width/50,crown_bottom_width/5,'#FCF9FB',50)
 	# Draw the face
 	face_bottom_circle_ang = 152
 	goto(x,y)
@@ -129,12 +187,19 @@ def draw_theyyam_face(x,y,height):
 	forward(top_band_pos - height * 0.16)
 	end_fill()
 	#decoration1
-	goto(tmp_x1+height*0.02,tmp_y1+height*0.02)
+	goto(tmp_x1+height*0.005,tmp_y1+height*0.035)
 	setheading(chead)
-	num_peaces = 50
-	for _ in range(num_peaces-1):
-		circle(height*0.2196 - height * 0.02,face_bottom_circle_ang/num_peaces)
-		dot(height * 0.005,'#fff')
+	num_peaces = 9
+	for i in range(1,num_peaces):
+		j = i if i < num_peaces/2 else num_peaces - i
+		crad = (height*0.017) * ((2/num_peaces)*(j%(num_peaces/2)))
+		circle(height*0.2196 - height * 0.005,face_bottom_circle_ang/num_peaces)
+		tmp_x1,tmp_y1 = pos()
+		chead = heading()
+		draw_dual_circle(tmp_x1,tmp_y1,crad,gap=crad/2.3,fillclr='#A21300',upper_size=height*0.003)
+		setheading(chead)
+		goto(tmp_x1,tmp_y1)
+	
 	# draw the band above face
 	goto(x,y+top_band_pos)
 	setheading(0)
@@ -226,10 +291,24 @@ def draw_theyyam_face(x,y,height):
 	lip_bottom_ang = 93
 	fillcolor('#A60F06')
 	circle(lip_bottom_rad,-lip_bottom_ang/2)
+	tmp_x1,tmp_y1 = pos()
+	chead = heading()
 	begin_fill()
 	circle(lip_bottom_rad,lip_bottom_ang)
+	tmp_x2,tmp_y2 = pos()
+	chead2 = heading()
 	end_fill()
-	
+	fillcolor('#7C0808')
+	goto(tmp_x1,tmp_y1)
+	setheading(360-chead)
+	begin_fill()
+	circle(-lip_bottom_rad/2,lip_bottom_ang)
+	end_fill()
+	goto(tmp_x2,tmp_y2)
+	setheading(360-chead2)
+	begin_fill()
+	circle(-lip_bottom_rad/2,-lip_bottom_ang)
+	end_fill()
 	# eyes
 	eye_gap = height * 0.121
 	eye_bottom_rad = 	height * 0.101
@@ -330,20 +409,23 @@ def draw_theyyam_face(x,y,height):
 	angle_top_circles = 95
 	top_circles_mul_gap = height * 0.025
 	top_circles_gap = height * 0.364
+	 # draw the two brown half circles in the top of the face
 	goto(x,y+top_circles_gap)
 	fillcolor('#9E1205')
 	setheading(0)
 	circle(-height * 0.1,-angle_top_circles/2)
+	tmp_x1,tmp_y1 = pos()
+	chead2 = heading() # angle for future use (RIGHT, BOTTOM)
 	begin_fill()
 	chead1 = heading()
 	circle(-height * 0.1,angle_top_circles)
-	chead = heading()
+	chead = heading() # angle for future use (LEFT, BOTTOM)
 	left(90)
 	forward(height*0.01)
 	setheading(chead+180)
 	circle(height * 0.1+height*0.01,angle_top_circles)
 	end_fill()
-
+	# second top brown half circle
 	setheading(chead1)
 	left(90)
 	forward(height*0.067)
@@ -356,6 +438,24 @@ def draw_theyyam_face(x,y,height):
 	setheading(chead+180)
 	circle(height * 0.1 + height*0.067 + height * 0.01,angle_top_circles)
 	end_fill()
+	
+	#Fill white 
+	goto(tmp_x1,tmp_y1)
+	setheading(chead2)
+	fillcolor('#fff')
+	begin_fill()
+	circle(-height * 0.1,angle_top_circles)
+	end_fill()
+	# top dot dot
+	setheading(chead2)
+	goto(tmp_x1,tmp_y1)
+	left(90)
+	forward(height*0.05) # go forward
+	right(90)
+	num_peaces = 20
+	for _ in range(num_peaces-1):
+		circle(-(height * 0.1 + height*0.05),angle_top_circles/num_peaces)
+		dot(height * 0.005,'#fff')
 	
 def colored_star(x,y,size=40,fillclr=None,angle=120,pen_down=False):
 	penup()
@@ -507,10 +607,21 @@ def draw_theyyam(x,y,width):
 		for _ in range(num_dots - 1):
 			circle(-(center_no_circle_rad+(center_mul_circle_gap*i)),180/num_dots)
 			dot(width*0.012,'#FF9002')
-	# return
 	# Draw the square below the big half circle
 	draw_square(x,y+non_circle_len,width,len_square_bottom,fill=True,clr='#FF5C01',border=0) # bottom_square
 	draw_square(x,y+non_circle_len + (width * 0.024),width - (width * 0.015),len_square_bottom - 2*(width * 0.024),fill=True,clr='#720B26',border=0) # bottom_square
+	#decoration
+	setheading(0)
+	goto(x-width/2,y+non_circle_len + (width * 0.012))
+	num_peaces = 50
+	for _ in range(num_peaces - 1):
+		forward(width / num_peaces)
+		dot(width*0.012,'#FF9002')
+	goto(x-width/2,y+non_circle_len + len_square_bottom - (width * 0.012))
+	for _ in range(num_peaces - 1):
+		forward(width / num_peaces)
+		dot(width*0.012,'#FF9002')
+	
 	goto(x-(width - (width * 0.015))/2,y+non_circle_len + (width * 0.024) + (len_square_bottom - 2*(width * 0.024))/2)
 	setheading(0)
 	wi_btm = width - (width * 0.015)
@@ -639,6 +750,12 @@ def draw_theyyam(x,y,width):
 	begin_fill()
 	circle(val_for_cir/2- width * 0.09)
 	end_fill()
+
+	draw_square(x,y+(non_circle_len)+(len_square_bottom/2),bottom_len,len_square_bottom/2,fill=True,border=0,clr='#9B9698')
+	draw_square(x,y+(non_circle_len)+(len_square_bottom/2)+(width*0.01),bottom_len-(width*0.036*1),len_square_bottom/2-(width*0.01),fill=True,border=0,clr='#A6AAAB')
+	draw_square(x,y+(non_circle_len)+(len_square_bottom/2)+(width*0.01*2),bottom_len-(width*0.036*2),len_square_bottom/2-(width*0.01*2),fill=True,border=0,clr='#B5B7B9')
+	draw_square(x,y+(non_circle_len)+(len_square_bottom/2)+(width*0.01*3),bottom_len-(width*0.036*3),len_square_bottom/2-(width*0.01*3),fill=True,border=0,clr='#EDEDEF')
+
 	# Draw the shape at the bottom, which look like a thaadi
 	r = bottom_len / 2#((width**0.1)**2+(width*0.175)**2)/(2*(width*0.1)) + 5
 	penup()
@@ -674,6 +791,16 @@ def draw_theyyam(x,y,width):
 	for _ in range(num_peaces-1):
 		circle(-r,bottom_band_ang/num_peaces)
 		dot(width * 0.01,'#fff')
+	goto(tmp_x2,tmp_y2+(bottom_band_height/2))
+	setheading(chead)
+	num_peaces = 8
+	for _ in range(num_peaces-1):
+		circle(-r,bottom_band_ang/num_peaces)
+		cx,cy = pos()
+		chead = heading()
+		draw_dashed_circle(cx,cy,width*0.02,'#FF5C01',20)
+		goto(cx,cy)
+		setheading(chead)
 	# draw the head of theyyam
 	setheading(0)
 	draw_theyyam_face(x,y+bottom_band_height,width * 0.455)
@@ -803,12 +930,20 @@ def draw_circular(rad,rad_len,sub_circle_count=3,colors=['red','green','blue'],n
   end_fill()
   return vis_len
 
+
+###############################
+''' Radius of the pookalam '''# Change it 
+rad = 400 # Circle all total  #	As you need
+###############################
+
+
 setup(1000,1000)
-tracer(0,0)
+title("Code A Pookalam - Aswanth V C")
+tracer(0,0) # Tracer is disabled for getting output instantly (remove if needed)
 update()
-speed(0)
+# speed(0) # Drawing speed maximum
+
 penup() 
-rad = 300 # Circle all total 
 reset_position(0,-rad)
 x,y = pos()
 # draw squash
@@ -816,45 +951,56 @@ num_rows = 8 # Number of rows in the squash
 len_row = 10 # height of a row in the squash
 num_peaces = 35 # the number of peaces in which the circle want to be divided
 colors = ["#536F3D","#5B0B16","#D6325C","#F06D0A",'#FACA27','#EDE9DE'] # the colors of the boxes in squash
-occ_squash = draw_squash(rad,num_rows,len_row,num_peaces,colors) # Draw the squash, it will return how much radius of total radius it 
-reset_position(0,y=y+occ_squash) # reset the position to the occupied position before
-# a background for the next draw_circular
-padding_circle = 2
-fillcolor('#2A3B1A')
-begin_fill()
-circle(rad-occ_squash)
-end_fill()
-reset_position(y=y+occ_squash+padding_circle) # reset position to the next occupied position
+# occ_squash = draw_squash(rad,num_rows,len_row,num_peaces,colors) # Draw the squash, it will return how much radius of total radius it 
+
 # draw circular
 circular_width = 40
 cut_threshold = 1.3
-new_rad = rad-occ_squash - padding_circle # the new radius for next shape
+
 colors2 = ['#9B232E','#BB5C08','#DEC727','#CCCDB4']
-occ_circular = draw_circular(new_rad,circular_width,colors=colors2,num_peaces=int(((new_rad)*math.pi*2)/(circular_width*cut_threshold)),sub_circle_count=4,pen_down=False) # draw circular shape 
+# occ_circular = draw_circular(new_rad,circular_width,colors=colors2,num_peaces=int(((new_rad)*math.pi*2)/(circular_width*cut_threshold)),sub_circle_count=4,pen_down=False) # draw circular shape 
+
+occ_circular = draw_circular(rad,circular_width,colors=colors2,num_peaces=int(((rad)*math.pi*2)/(circular_width*cut_threshold)),sub_circle_count=4,pen_down=False) # draw circular shape 
+reset_position(0,y=y+occ_circular) # reset the position to the occupied position before
+# a background for the next draw_circular
+padding_circle = 5
+fillcolor('#2A3B1A')
+begin_fill()
+circle(rad-occ_circular)
+end_fill()
+new_rad = rad-occ_circular - padding_circle # the new radius for next shape
+reset_position(y=y+occ_circular+padding_circle) # reset position to the next occupied position
+occ_squash = draw_squash(new_rad,num_rows,len_row,num_peaces,colors) # Draw the squash, it will return how much radius of total radius it 
+
 reset_position(0,y+occ_squash+padding_circle+occ_circular+5)
 fillcolor('#D5D1AD')
 begin_fill()
 circle(rad - occ_squash-padding_circle-occ_circular-5)
 end_fill()
-th_height = draw_theyyam(0,20,(rad-occ_squash-padding_circle-occ_circular-20)*2)
+
+draw_dashed_circle(0,0,rad - occ_squash-padding_circle-occ_circular-5,fillclr='#f2eecd',peaces=20)
+
+th_height = draw_theyyam(0,rad*0.1,(rad-occ_squash-padding_circle-occ_circular-20)*2)
 
 goto(0,0 - th_height/2 - ((rad-occ_squash-padding_circle-occ_circular-20)- th_height/2) / 2)
-write("THEYYAM",align="center",font=("Arial", 16, "bold"))
-
-
-# placeholder
+write("THEYYAM",align="center",font=("Courier", int(rad*0.08), "bold"))
+setheading(270)
+write("POOKALAM",align="center")
+# placeholder (name)
 width,height = screensize()
 penup()
-goto(width - 20,-height)
+goto(width - 20,-rad+15)
 setheading(270)
-pendown()
-write("Code A Pookalam",align="right",font=("Arial", 14, "bold"))
-penup()
-forward(20)
 color('black')
 pendown()
-write("- Aswanth V C",align="right",font=("Arial", 12, "normal"))
+write("- Aswanth V C",align="right",font=("Arial", 7, "normal"))
 penup()
-# continue ...
+forward(15)
+color('#800B05')
+pendown()
+write("\"Code A Pookalam\"",align="right",font=("Arial", 8, "bold"))
+penup()
 
 mainloop() # main loooooop
+
+# Thank you !

@@ -1,4 +1,4 @@
-# Code-A-Pookalam 2023
+# Code-A-Pookalam 2023 (Competition Ended)
 Celebrate the spirit of Onam with code and creativity! 
 
 [What is Code-A-Pookalam](#what-is-code-a-pookalam) | [Guidelines](#guidelines) | [Resources](#resources) | [Prize Pool](#prize-pool) | [FAQs](#faqs) | [Contact Us](#contact-us)
